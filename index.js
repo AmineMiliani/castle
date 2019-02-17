@@ -29,28 +29,21 @@ castle(url,function (err,link,name,chef_name,chef_link,count){
         var chef_link = list[i].getChef_link();
         if(chef_link.indexOf("chef") >= 0)
         {
-          request(chef_link,(error, response, html) => {
-            if (!error && response.statusCode == 200) {
-              const $ = cheerio.load(html)
-              var resto_name = $('.locationContact').find('strong').text();
-              //list[i].setRestoName(resto_name)
-              //console.log(j);
+          resto(chef_link,function (err,resto_name){
+            if(err) return console.error("Error: ", err)
+            {}
+            list[i].setRestoName(resto_name)
 
-              list_tmp[j] = resto_name;
-              console.log(list_tmp[j])
-              j++
-
-            }
           })
         }
         else{
-          list[i].setRestoName("n'a pas de chef")
+          list[i].setRestoName("doesn't have chef")
         }
       }
     }
   }
 
-  //console.log(list);
+  console.log("Why does this console log print first ?????????");
 })
 
 function Hotel(name,url,chef_name,chef_link){
